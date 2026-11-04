@@ -3,9 +3,13 @@
 Homebrew tap for [RunnerDeck](https://github.com/AnikethTS/RunnerDeck), a dashboard for every self-hosted GitHub Actions runner on your machine.
 
 ```bash
+brew tap anikethts/runnerdeck
+brew trust anikethts/runnerdeck
 brew install anikethts/runnerdeck/runnerdeck
 runnerdeck --open
 ```
+
+Recent Homebrew versions refuse to load formulas from a third-party tap until you trust it, which is what `brew trust` does. This tap is tested on macOS; on Linux, use the Debian package from the RunnerDeck releases instead.
 
 Run it as a background service with `brew services start runnerdeck`. Your settings and runners are kept in `~/Library/Application Support/RunnerDeck` (macOS) or `~/.local/share/runnerdeck` (Linux).
 

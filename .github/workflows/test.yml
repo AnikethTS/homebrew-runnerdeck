@@ -12,16 +12,15 @@ permissions:
 
 jobs:
   install:
-    name: Install · ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
+    name: Install · macOS
+    runs-on: macos-latest
     timeout-minutes: 30
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [macos-latest, ubuntu-latest]
     steps:
       - name: Tap this repository
         run: brew tap anikethts/runnerdeck "https://github.com/${GITHUB_REPOSITORY}"
+
+      - name: Trust the tap
+        run: brew trust anikethts/runnerdeck
 
       - name: Audit the formula
         run: brew audit --formula anikethts/runnerdeck/runnerdeck
