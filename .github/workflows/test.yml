@@ -1,0 +1,46 @@
+name: Test the formula
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "23 4 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  install:
+    name: Install · ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+    steps:
+      - name: Tap this repository
+        run: brew tap anikethts/runnerdeck "https://github.com/${GITHUB_REPOSITORY}"
+
+      - name: Audit the formula
+        run: brew audit --formula anikethts/runnerdeck/runnerdeck
+
+      - name: Install the formula
+        run: brew install --formula anikethts/runnerdeck/runnerdeck
+
+      - name: Run the formula's own test
+        run: brew test anikethts/runnerdeck/runnerdeck
+
+      - name: Start it and check the dashboard answers
+        run: |
+          RUNNERDECK_NO_BANNER=1 runnerdeck 8210 >"${RUNNER_TEMP}/runnerdeck.log" 2>&1 &
+          for _ in $(seq 1 60); do
+            if curl -fsS http://127.0.0.1:8210/health.php >/dev/null 2>&1; then
+              echo "RunnerDeck answered"
+              exit 0
+            fi
+            sleep 1
+          done
+          cat "${RUNNER_TEMP}/runnerdeck.log"
+          exit 1
