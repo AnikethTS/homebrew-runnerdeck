@@ -1,8 +1,8 @@
 class Runnerdeck < Formula
   desc "Dashboard for managing a pool of self-hosted GitHub Actions runners"
   homepage "https://github.com/AnikethTS/RunnerDeck"
-  url "https://github.com/AnikethTS/RunnerDeck/releases/download/v1.12.1/runnerdeck-v1.12.1.zip"
-  sha256 "7cca06c69d46b4e4c428c8462d2b72139fcb27f7f7449605c88b89762901b3ee"
+  url "https://github.com/AnikethTS/RunnerDeck/releases/download/v1.13.0/runnerdeck-v1.13.0.zip"
+  sha256 "83f3c7738f153d56aaa29eaadb587fc3d97b5d888c8adf729e0a324bdaa28926"
   license "MIT"
 
   depends_on "gh"
